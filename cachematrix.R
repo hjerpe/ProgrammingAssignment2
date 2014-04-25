@@ -33,7 +33,7 @@ cacheSolve <- function(spec_A, ...) {
     #Client function for special matrix object makCacheMatrix
     #the function returns the inverse of special matrix object
     #and caches the result (we assume that the matrix is 
-    #invertible.
+    #invertible).
     # Args:
     #   spec_A  -    makeMatrix object.
     # Returns:
