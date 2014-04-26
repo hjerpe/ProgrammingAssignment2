@@ -11,18 +11,18 @@ makeCacheMatrix <- function(mat_A = numeric()) {
     #   get         -   Returns the matrix mat_A.
     #   setInverse  -   Sets inverse of mat_A and caches
     #                   the result.
-    #   getinverse  -   Returns the inverse of mat_A.
+    #   getInverse  -   Returns the inverse of mat_A.
     
     inv_A <- NULL
-    #Change matrix entries instead of making a new makeMatrix 
-    #object.
+    #Change matrix entries instead of making a new 
+    #makeCacheMatrix object.
     set <- function(mat_B) {
         mat_A <<- mat_B
         inv_A <<- NULL
     }
     get <- function() mat_A
-    setInverse <- function(inverse) inv_A <<- inverse
-    getInverse <- function() inv_A
+    setInverse <- function(inverse) inv_A <<- inverse #Cache inverse.
+    getInverse <- function() inv_A #Return inverse.
     #Returs four functions wrapped in a list.
     list(set = set, get = get,
          setInverse = setInverse,
@@ -40,7 +40,7 @@ cacheSolve <- function(spec_A, ...) {
     #   inv     -   inverse of matrix contained in spec_A.
     
     inv<- spec_A$getInverse()
-    #Inverse already been computed.
+    #Return inverse if it has already been computed.
     if(!is.null(inv)) {
         message("getting cached data")
         return(inv)
