@@ -17,6 +17,7 @@ makeCacheMatrix <- function(mat_A = numeric()) {
     # Change matrix entries instead of making a new 
     # makeCacheMatrix object.
     set <- function(mat_B) {
+        # Changing and cache matrices(Global scope).
         mat_A <<- mat_B
         inv_A <<- NULL
     }
@@ -40,7 +41,7 @@ cacheSolve <- function(spec_A, ...) {
     # Returns:
     #   inv     -   inverse of matrix contained in spec_A.
     
-    inv<- spec_A$getInverse()
+    inv <- spec_A$getInverse()
     # Return inverse if it has already been computed.
     if (!is.null(inv)) {
         message("getting cached data")
