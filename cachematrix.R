@@ -1,5 +1,5 @@
-#Two functions for creating special matrix, where its inverse
-#can be cached instead of repeatedly being computed.
+# Two functions for creating special matrix, where its inverse
+# is cached instead of repeatedly being computed.
 
 makeCacheMatrix <- function(mat_A = numeric()) {
     #Function returns a list of functions wrapped in a list.
@@ -14,40 +14,41 @@ makeCacheMatrix <- function(mat_A = numeric()) {
     #   getInverse  -   Returns the inverse of mat_A.
     
     inv_A <- NULL
-    #Change matrix entries instead of making a new 
-    #makeCacheMatrix object.
+    # Change matrix entries instead of making a new 
+    # makeCacheMatrix object.
     set <- function(mat_B) {
         mat_A <<- mat_B
         inv_A <<- NULL
     }
     get <- function() mat_A
-    setInverse <- function(inverse) inv_A <<- inverse #Cache inverse.
+    # Cache inverse(Global scope).
+    setInverse <- function(inverse) inv_A <<- inverse
     getInverse <- function() inv_A #Return inverse.
-    #Returs four functions wrapped in a list.
+    # Returs four functions wrapped in a list.
     list(set = set, get = get,
          setInverse = setInverse,
          getInverse = getInverse)
 }
 
 cacheSolve <- function(spec_A, ...) {
-    #Client function for special matrix object makCacheMatrix
-    #the function returns the inverse of special matrix object
-    #and caches the result (we assume that the matrix is 
-    #invertible).
+    # Client function for special matrix object makCacheMatrix
+    # the function returns the inverse of special matrix object
+    # and caches the result (we assume that the matrix is 
+    # invertible).
     # Args:
     #   spec_A  -    makeMatrix object.
     # Returns:
     #   inv     -   inverse of matrix contained in spec_A.
     
     inv<- spec_A$getInverse()
-    #Return inverse if it has already been computed.
-    if(!is.null(inv)) {
+    # Return inverse if it has already been computed.
+    if (!is.null(inv)) {
         message("getting cached data")
         return(inv)
     }
-    #else we
-    data <- spec_A$get()    #Get matrix from spec matrix A.
-    inv <- solve(data, ...) #Compute inverse of matrix.
-    spec_A$setInverse(inv)  #Add inverse to cache.
-    inv                     #Return result. 
+    # else we
+    data <- spec_A$get()    # Get matrix from spec matrix A.
+    inv <- solve(data, ...) # Compute inverse of matrix.
+    spec_A$setInverse(inv)  # Add inverse to cache.
+    inv                     # Return result. 
 }
